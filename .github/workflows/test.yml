@@ -21,7 +21,7 @@ jobs:
           echo "STAGE=${STAGE}" >> $GITHUB_ENV
 
       - name: echo production
-        if: env.STAGE == 'production'
+        if: env.STAGE == 'staging'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
