@@ -22,7 +22,11 @@ jobs:
 
       - name: echo production
         if: env.STAGE == 'production'
-        run: echo "echo production is called ${STAGE}"
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
 
       - name: echo staging
         if: env.STAGE == 'staging'
