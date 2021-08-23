@@ -1,31 +1,19 @@
 name: Github Action Test
 on:
-  pull_request:
-    paths-ignore:
-      - "packages/cdk/**"
-      - "packages/proxy/**"
-      - "packages/certbot/**"
-      - "documents/**"
-      - "**.md"
-      - "**/k8s/**"
+  push:
 
 jobs:
   action-test:
     runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        node-version: [12.14.0]
+    # strategy:
+    #   matrix:
+    #     node-version: [12.14.0]
+
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Display version of Node.js, npm, Yarn
-        run: |
-          node --version
-          npm --version
-          yarn --version
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
 
       - name: set env
         run: |
