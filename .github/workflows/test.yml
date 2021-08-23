@@ -31,3 +31,22 @@ jobs:
       - name: echo staging
         if: env.STAGE == 'staging'
         run: echo "echo staging is called ${STAGE}"
+
+      - name: Slack Noitification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              attachments: [{
+                fields: 'job',
+                author_name: '${{ env.STAGE }}' === 'production' ? 'deploy-prod' : 'deploy-dev',
+                mention: 'here',
+                if_mention: 'failure',
+                color: '${{ job.status }}' === 'success' ? 'good' : 'danger',
+                text: '${{ job.status }}' === 'success' ? 'Deployment is success' : 'Deployment is failed',
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
